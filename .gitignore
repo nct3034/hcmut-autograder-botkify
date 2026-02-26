@@ -1,0 +1,17 @@
+# Bỏ qua thư mục lưu trữ file nộp tạm thời
+uploads/
+
+# Bỏ qua các file thực thi của C++
+*.exe
+*.o
+
+# Bỏ qua các file rác của Python
+__pycache__/
+*.pyc
+
+# Bỏ qua môi trường ảo (nếu có)
+venv/
+env/
+
+# Bỏ qua cài đặt riêng của VS Code
+.vscode/

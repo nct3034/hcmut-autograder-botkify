@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HCMUT AutoGrader - BotKify</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>HCMUT - AutoGrader BotKify 🚀</h1>
+
+      <div class="upload-wrapper" id="dropZone">
+        <p style="margin-bottom: 5px; font-size: 16px">
+          <b>Yêu cầu:</b> Kéo thả hoặc chọn các file:
+          <code>BotkifyLinkedList.h</code>, <code>Playlist.h</code>, và
+          <code>Playlist.cpp</code>
+        </p>
+
+        <input type="file" id="fileInput" multiple accept=".cpp,.h" />
+        <button
+          class="browse-btn"
+          onclick="document.getElementById('fileInput').click()"
+        >
+          📁 Chọn Files
+        </button>
+
+        <div class="file-list-container" id="fileList"></div>
+
+        <button class="submit-btn" onclick="submitCode()" id="runBtn">
+          Nộp Bài & Chấm Điểm
+        </button>
+      </div>
+
+      <div id="globalStatus"></div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th width="5%"></th>
+              <th width="40%">Test Case (Code)</th>
+              <th width="25%">Expected</th>
+              <th width="20%">Got</th>
+              <th width="10%">Status</th>
+            </tr>
+          </thead>
+          <tbody id="resultBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>

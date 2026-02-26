@@ -1,0 +1,216 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    background: #f4f7f6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #03396c;
+    text-align: center;
+}
+
+/* Khu vực kéo thả */
+.upload-wrapper {
+    border: 2px dashed #005b96;
+    padding: 30px 20px;
+    text-align: center;
+    background: #eef2f5;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.upload-wrapper.dragover {
+    background: #d0e3f0;
+    border-color: #011f4b;
+    transform: scale(1.01);
+}
+
+.upload-wrapper input[type="file"] {
+    display: none;
+}
+
+.browse-btn {
+    background: #fff;
+    border: 1px solid #005b96;
+    color: #005b96;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+.browse-btn:hover {
+    background: #005b96;
+    color: white;
+}
+
+.submit-btn {
+    display: block;
+    width: 220px;
+    margin: 20px auto 10px;
+    padding: 12px;
+    font-size: 16px;
+    background: #005b96;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.submit-btn:hover {
+    background: #011f4b;
+}
+
+.submit-btn:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+/* Danh sách file hiển thị */
+.file-list-container {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 8px 15px;
+    border-radius: 6px;
+    width: fit-content;
+    min-width: 250px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.file-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    fill: #555;
+}
+
+.file-name {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    color: #0078d7;
+    font-weight: 500;
+}
+
+/* THANH CUỘN NGANG CHO BẢNG */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Bảng hiển thị */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+    /* Ép bảng đủ rộng để không bóp méo code */
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background-color: #e0e0e0;
+    font-size: 16px;
+    color: #333;
+    position: sticky;
+    top: 0;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f7f7f7;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* SỬA pre-wrap THÀNH pre ĐỂ CODE KHÔNG BỊ XUỐNG DÒNG */
+pre {
+    margin: 0;
+    white-space: pre;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: #333;
+}
+
+.pass {
+    color: #2e7d32;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.fail {
+    color: #c62828;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.diff-highlight {
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+}
+
+.stt-col {
+    text-align: center;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Style cho cột STT */
+
+/* Bảng trạng thái TỔNG THỂ */
+#globalStatus {
+    text-align: center;
+    margin-top: 20px;
+    display: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.bg-red {
+    background-color: #d32f2f;
+}
+
+.bg-yellow {
+    background-color: #f57f17;
+}
+
+.bg-green {
+    background-color: #388e3c;
+}
