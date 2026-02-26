@@ -50,15 +50,19 @@ python test_generators/gen_103_112_memory_leak.py
 python test_generators/gen_113_125_integration.py
 ```
 
+### Xóa bớt testcase nếu có quá nhiều
+
+Xóa các testcase không cần thiết (hoặc có thể xóa luôn cả thư mục) trong `backend_core/test_cases/`
+
 ## 4. Cách thêm testcase và expected để kiểm tra
 
 Nếu bạn muốn tự thêm một test case riêng lẻ để kiểm tra lỗi cụ thể:
 
-Bước 1 (Code): Tạo file test_xxx.cpp trong backend_core/test_cases/.
+### Bước 1 (Code): Tạo file `test_xxx.cpp` trong `backend_core/test_cases/`.
 
 Nội dung: Chỉ chứa duy nhất một hàm void (VD: void test_xxx() { ... }).
 
-Bước 2 (Đáp án): Tạo file test_xxx.txt trong backend_core/expected_outputs/.
+### Bước 2 (Đáp án): Tạo file `test_xxx.txt` trong `backend_core/expected_outputs/`.
 
 Nội dung: Chứa kết quả chính xác mà chương trình cần in ra màn hình.
 
@@ -67,7 +71,6 @@ Nội dung: Chứa kết quả chính xác mà chương trình cần in ra màn 
 Tại Terminal của VS Code, khởi động server bằng lệnh:
 
 ```
-
 python app.py
 ```
 
