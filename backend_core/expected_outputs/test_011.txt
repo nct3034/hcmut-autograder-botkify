@@ -1,2 +1,1 @@
-test_011 init: Hello,World,HCMUT,K23
-test_011 after: World,HCMUT
+Size:0

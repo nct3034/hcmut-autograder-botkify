@@ -15,7 +15,7 @@ Mở phần mềm Visual Studio Code.
 
 Chọn File > Open Folder và mở thư mục chứa mã nguồn của dự án này.
 
-## 3. Tạo ra 10 testcase mẫu ban đầu
+## 3. Tạo ra testcase mẫu
 
 Mở Terminal tích hợp trong VS Code (phím tắt Ctrl + `).
 
@@ -23,14 +23,27 @@ Chạy lệnh sau để tự động tạo 10 testcase và file đáp án mẫu:
 
 ```
 
-python generate_tests.py
+python test_generators/gen_01_10_basic.py
+```
+
+Trong folder test_generators có một vài chương trình có thể tạo vài testcase mẫu.
+Cú pháp:
+
+```
+python test_generators/tên_chương_trình
 ```
 
 ## 4. Cách thêm testcase và expected để kiểm tra
 
-Thêm Testcase: Tạo file test_xxx.cpp trong thư mục backend_core/test_cases/. File này chỉ chứa duy nhất một hàm void (VD: void test_xxx() { ... }).
+Nếu bạn muốn tự thêm một test case riêng lẻ để kiểm tra lỗi cụ thể:
 
-Thêm Expected: Tạo file test_xxx.txt chứa kết quả in ra màn hình tương ứng và đặt trong thư mục backend_core/expected_outputs/.
+Bước 1 (Code): Tạo file test_xxx.cpp trong backend_core/test_cases/.
+
+Nội dung: Chỉ chứa duy nhất một hàm void (VD: void test_xxx() { ... }).
+
+Bước 2 (Đáp án): Tạo file test_xxx.txt trong backend_core/expected_outputs/.
+
+Nội dung: Chứa kết quả chính xác mà chương trình cần in ra màn hình.
 
 ## 5. Cách chạy chương trình
 

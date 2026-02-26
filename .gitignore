@@ -1,17 +1,19 @@
-# Bỏ qua thư mục lưu trữ file nộp tạm thời
+# --- Cấu trúc dữ liệu Test (Bỏ qua vì đã có script tự tạo) ---
+backend_core/test_cases/*.cpp
+backend_core/expected_outputs/*.txt
+
+# Ngoại lệ: Nếu bạn muốn giữ lại một vài file mẫu cố định (không dùng script) 
+# thì có thể thêm dòng dưới đây (bỏ dấu #):
+# !backend_core/test_cases/test_001.cpp
+
+# --- Thư mục rác của hệ thống ---
 uploads/
-
-# Bỏ qua các file thực thi của C++
-*.exe
-*.o
-
-# Bỏ qua các file rác của Python
 __pycache__/
 *.pyc
-
-# Bỏ qua môi trường ảo (nếu có)
-venv/
-env/
-
-# Bỏ qua cài đặt riêng của VS Code
 .vscode/
+
+# --- File thực thi sau khi biên dịch ---
+*.exe
+*.o
+*.out
+*.app
