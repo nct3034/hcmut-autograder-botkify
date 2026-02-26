@@ -33,6 +33,16 @@ Cú pháp:
 python test_generators/tên_chương_trình
 ```
 
+Nếu bạn muốn cài đặt toàn bộ testcase
+
+```
+python test_generators/gen_01_10_basic.py
+python test_generators/gen_11_22_linkedlist.py
+python test_generators/gen_23_32_song.py
+python test_generators/gen_33_42_playlist_basic.py
+python test_generators/gen_43_52_playlist_removesong.py
+```
+
 ## 4. Cách thêm testcase và expected để kiểm tra
 
 Nếu bạn muốn tự thêm một test case riêng lẻ để kiểm tra lỗi cụ thể:
