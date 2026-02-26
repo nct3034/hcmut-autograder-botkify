@@ -214,3 +214,53 @@ pre {
 .bg-green {
     background-color: #388e3c;
 }
+
+/* --- PHÂN TRANG (PAGINATION) --- */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 25px 0;
+    /* Tăng khoảng cách trên dưới lên 25px */
+    min-height: 40px;
+    /* Đảm bảo không bị nhảy khung khi chưa có nút */
+}
+
+/* Tùy chỉnh riêng cho thanh phía trên nếu muốn sát phần Status hơn hoặc xa hơn */
+#paginationControlsTop {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.page-btn {
+    padding: 8px 14px;
+    border: 1px solid #005b96;
+    background: white;
+    color: #005b96;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.page-btn.nav-btn {
+    background: #f0f7ff;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: #d0e3f0;
+}
+
+.page-btn.active {
+    background: #005b96;
+    color: white;
+    cursor: default;
+}
+
+.page-btn:disabled {
+    border-color: #ddd;
+    color: #ccc;
+    cursor: not-allowed;
+}

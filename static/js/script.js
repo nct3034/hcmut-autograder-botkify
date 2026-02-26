@@ -64,6 +64,109 @@ function escapeHTML(str) {
 
 // ... (Phần logic kéo thả và hàm highlightDiff giữ nguyên) ...
 
+let allResultsData = [];
+let currentPage = 1;
+const itemsPerPage = 10;
+let autoScroll = true; // Cờ theo dõi: tự động nhảy trang khi đang chấm
+
+// Hàm vẽ lại bảng theo trang
+function renderTable() {
+    const tbody = document.getElementById('resultBody');
+    tbody.innerHTML = "";
+    
+    // Tính toán cắt mảng: ví dụ trang 1 cắt từ 0->10, trang 2 từ 10->20
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const pageData = allResultsData.slice(start, end);
+
+    pageData.forEach(data => {
+        const tr = document.createElement('tr');
+        const statusClass = data.status === 'PASSED' ? 'pass' : 'fail';
+        const statusIcon = data.status === 'PASSED' ? '✅ PASSED' : '❌ FAILED';
+        const gotFormatted = (data.status === 'COMPILE ERROR' || data.got.includes("TLE")) 
+                            ? escapeHTML(data.got) : highlightDiff(data.expected, data.got);
+        
+        tr.innerHTML = `
+            <td class="stt-col" style="text-align: center; vertical-align: middle;">
+                <div style="font-size: 20px; color: #005b96; margin-bottom: 8px;"><b>#${data.currentIndex}</b></div>
+                <div class="${statusClass}" style="font-size: 14px;">${statusIcon}</div>
+            </td>
+            <td><pre>${escapeHTML(data.test_code)}</pre></td>
+            <td><pre>${escapeHTML(data.expected)}</pre></td>
+            <td><pre>${gotFormatted}</pre></td>
+            <td class="${statusClass}" style="vertical-align: middle; text-align: center;">${statusIcon}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// Hàm vẽ lại các nút bấm phân trang
+function renderPagination() {
+    const topContainer = document.getElementById('paginationControlsTop');
+    const bottomContainer = document.getElementById('paginationControlsBottom');
+    
+    // Hàm phụ để tạo nội dung các nút bấm
+    const createControls = (container) => {
+        container.innerHTML = "";
+        const totalPages = Math.ceil(allResultsData.length / itemsPerPage);
+
+        if (totalPages <= 1 && allResultsData.length <= itemsPerPage) {
+            container.style.display = "none";
+            return;
+        }
+        container.style.display = "flex";
+
+        // --- Nút PREVIOUS ---
+        const prevBtn = document.createElement('button');
+        prevBtn.className = "page-btn nav-btn";
+        prevBtn.innerHTML = "&laquo; Trước"; // Biểu tượng <<
+        prevBtn.disabled = (currentPage === 1);
+        prevBtn.onclick = () => {
+            if (currentPage > 1) {
+                currentPage--;
+                autoScroll = false;
+                renderTable();
+                renderPagination();
+            }
+        };
+        container.appendChild(prevBtn);
+
+        // --- Các nút SỐ TRANG ---
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement('button');
+            btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+            btn.innerText = i;
+            btn.onclick = () => {
+                currentPage = i;
+                autoScroll = false;
+                renderTable();
+                renderPagination();
+            };
+            container.appendChild(btn);
+        }
+
+        // --- Nút NEXT ---
+        const nextBtn = document.createElement('button');
+        nextBtn.className = "page-btn nav-btn";
+        nextBtn.innerHTML = "Sau &raquo;"; // Biểu tượng >>
+        nextBtn.disabled = (currentPage === totalPages);
+        nextBtn.onclick = () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                autoScroll = false;
+                renderTable();
+                renderPagination();
+            }
+        };
+        container.appendChild(nextBtn);
+    };
+
+    // Vẽ vào cả 2 nơi
+    createControls(topContainer);
+    createControls(bottomContainer);
+}
+
+// Hàm nộp bài chính
 async function submitCode() {
     const btn = document.getElementById('runBtn');
     const tbody = document.getElementById('resultBody');
@@ -74,11 +177,18 @@ async function submitCode() {
         return;
     }
 
+    // Reset lại toàn bộ trạng thái khi nộp bài mới
     btn.disabled = true;
     tbody.innerHTML = "";
+    document.getElementById('paginationControlsTop').innerHTML = "";
+    document.getElementById('paginationControlsBottom').innerHTML = "";
     globalStatus.style.display = "block";
     globalStatus.className = "bg-yellow";
     globalStatus.innerText = "Hệ thống đang khởi động và nạp file... ⚙️";
+    
+    allResultsData = [];
+    currentPage = 1;
+    autoScroll = true;
 
     const formData = new FormData();
     selectedFiles.forEach(file => formData.append('files', file));
@@ -91,7 +201,6 @@ async function submitCode() {
             throw new Error(errData.error || "Lỗi Server");
         }
 
-        // Đọc dữ liệu theo dạng Stream (Luồng chảy)
         const reader = response.body.getReader();
         const decoder = new TextDecoder("utf-8");
         let buffer = "";
@@ -106,7 +215,7 @@ async function submitCode() {
 
             buffer += decoder.decode(value, { stream: true });
             let lines = buffer.split('\n');
-            buffer = lines.pop(); // Giữ lại phần text chưa hoàn chỉnh cho vòng lặp sau
+            buffer = lines.pop(); 
 
             for (let line of lines) {
                 if (!line.trim()) continue;
@@ -119,34 +228,22 @@ async function submitCode() {
                 else if (data.type === 'result') {
                     currentIndex++;
                     if (data.status === 'PASSED') passCount++;
-
-                    // Cập nhật trạng thái liên tục
-                    globalStatus.innerText = `Đang chấm ${currentIndex}/${totalTests} Test Cases... ⏳`;
-
-                    // Vẽ ngay 1 dòng lên bảng
-                    const tr = document.createElement('tr');
-                    const statusClass = data.status === 'PASSED' ? 'pass' : 'fail';
-                    const statusIcon = data.status === 'PASSED' ? '✅ PASSED' : '❌ FAILED';
-                    const gotFormatted = (data.status === 'COMPILE ERROR' || data.got.includes("TLE")) 
-                                        ? escapeHTML(data.got) : highlightDiff(data.expected, data.got);
                     
-                    tr.innerHTML = `
-                        <td class="stt-col" style="text-align: center; vertical-align: middle;">
-                            <div style="font-size: 20px; color: #005b96; margin-bottom: 8px;"><b>#${currentIndex}</b></div>
-                            <div class="${statusClass}" style="font-size: 14px;">${statusIcon}</div>
-                        </td>
-                        <td><pre>${escapeHTML(data.test_code)}</pre></td>
-                        <td><pre>${escapeHTML(data.expected)}</pre></td>
-                        <td><pre>${gotFormatted}</pre></td>
-                        <td class="${statusClass}" style="vertical-align: middle; text-align: center;">${statusIcon}</td>
-                    `;
-                    tbody.appendChild(tr);
+                    // Lưu dữ liệu vào mảng tổng
+                    data.currentIndex = currentIndex;
+                    allResultsData.push(data);
 
-                    // Tự động cuộn trang xuống dòng mới nhất
-                    tr.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                    // Nếu đang chế độ autoScroll, tự động chuyển sang trang mới nhất
+                    if (autoScroll) {
+                        currentPage = Math.ceil(allResultsData.length / itemsPerPage);
+                    }
+
+                    // Cập nhật giao diện liên tục
+                    globalStatus.innerText = `Đang chấm ${currentIndex}/${totalTests} Test Cases... ⏳`;
+                    renderTable();
+                    renderPagination();
                 }
                 else if (data.type === 'done') {
-                    // Chốt kết quả tổng
                     if (passCount === 0) {
                         globalStatus.className = "bg-red";
                         globalStatus.innerText = `❌ Sai toàn bộ! (Pass ${passCount}/${totalTests})`;
