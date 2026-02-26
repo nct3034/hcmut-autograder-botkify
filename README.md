@@ -47,6 +47,7 @@ python test_generators/gen_73_82_playlist_compareto.py
 python test_generators/gen_83_92_playlist_playrandom.py
 python test_generators/gen_93_102_playlist_playapproximate.py
 python test_generators/gen_103_112_memory_leak.py
+python test_generators/gen_113_125_integration.py
 ```
 
 ## 4. Cách thêm testcase và expected để kiểm tra
