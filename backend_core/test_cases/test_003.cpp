@@ -1,5 +1,3 @@
-#include "main.h"
-
 void test_003() {
     BotkifyLinkedList<string> arr;
     arr.add("apple");

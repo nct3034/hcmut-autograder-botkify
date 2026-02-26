@@ -1,5 +1,3 @@
-#include "main.h"
-
 void test_002() {
     BotkifyLinkedList<int> arr;
     arr.add(5);

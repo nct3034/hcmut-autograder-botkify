@@ -113,7 +113,6 @@ def generate():
         cpp_fn = f"test_{num:03d}.cpp"
         txt_fn = f"test_{num:03d}.txt"
         with open(os.path.join(CPP_DIR, cpp_fn), "w", encoding="utf-8") as f:
-            f.write('#include "main.h"\n\n')
             f.write(f"void test_{num:03d}() {{")
             f.write(code.rstrip())
             f.write("\n}\n")

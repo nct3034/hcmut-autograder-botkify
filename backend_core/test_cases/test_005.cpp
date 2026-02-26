@@ -1,5 +1,3 @@
-#include "main.h"
-
 void test_005() {
     Playlist p("Pop Hits");
     p.addSong(new Song(1, "A", "Art", "Alb", 100, 10, "url"));
