@@ -22,7 +22,6 @@ Mở Terminal tích hợp trong VS Code (phím tắt Ctrl + `).
 Chạy lệnh sau để tự động tạo 10 testcase và file đáp án mẫu:
 
 ```
-
 python test_generators/gen_01_10_basic.py
 ```
 
