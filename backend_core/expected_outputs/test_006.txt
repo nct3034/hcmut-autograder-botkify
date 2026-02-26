@@ -1,1 +1,0 @@
-test_006 getTotalScore (Spec 3.3): 114

@@ -1,2 +1,0 @@
-test_005 next: B-Art -> C-Art -> A-Art -> B-Art
-test_005 prev: A-Art -> C-Art -> B-Art -> A-Art

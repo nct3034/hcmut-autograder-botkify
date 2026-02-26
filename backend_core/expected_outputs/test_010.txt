@@ -1,2 +1,0 @@
-test_010 removeSong logic:
-Next song after removal: S2-Singer
