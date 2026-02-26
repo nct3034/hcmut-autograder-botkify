@@ -42,6 +42,7 @@ python test_generators/gen_23_32_song.py
 python test_generators/gen_33_42_playlist_basic.py
 python test_generators/gen_43_52_playlist_removesong.py
 python test_generators/gen_53_62_playlist_play.py
+python test_generators/gen_63_72_playlist_gettotalscore.py
 ```
 
 ## 4. Cách thêm testcase và expected để kiểm tra
