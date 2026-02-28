@@ -14,7 +14,7 @@ test_scenarios = [
     p.addSong(new Song(1, "A", "ArtA", "Alb", 100, 10, "U"));
     p.addSong(new Song(2, "B", "ArtB", "Alb", 100, 10, "U"));
     p.removeSong(0);
-    cout << "Size: " << p.size() << " | Index 0 is now: " << p.getSong(0)->toString() << endl;
+    cout << "Size: " << p.getSize() << " | Index 0 is now: " << p.getSong(0)->toString() << endl;
     """, "Size: 1 | Index 0 is now: B-ArtB"),
 
     # Test 44: Xóa bài hát ở vị trí cuối cùng (index = size - 1)
@@ -24,7 +24,7 @@ test_scenarios = [
     p.addSong(new Song(2, "B", "ArtB", "Alb", 100, 10, "U"));
     p.addSong(new Song(3, "C", "ArtC", "Alb", 100, 10, "U"));
     p.removeSong(2);
-    cout << "Size: " << p.size() << " | Last element is now: " << p.getSong(1)->toString() << endl;
+    cout << "Size: " << p.getSize() << " | Last element is now: " << p.getSong(1)->toString() << endl;
     """, "Size: 2 | Last element is now: B-ArtB"),
 
     # Test 45: Xóa bài hát ở vị trí giữa
@@ -34,7 +34,7 @@ test_scenarios = [
     p.addSong(new Song(2, "B", "ArtB", "Alb", 100, 10, "U"));
     p.addSong(new Song(3, "C", "ArtC", "Alb", 100, 10, "U"));
     p.removeSong(1);
-    cout << "Size: " << p.size() << " | Index 1 is now: " << p.getSong(1)->toString() << endl;
+    cout << "Size: " << p.getSize() << " | Index 1 is now: " << p.getSong(1)->toString() << endl;
     """, "Size: 2 | Index 1 is now: C-ArtC"),
 
     # Test 46: Exception - Cố gắng xóa trên Playlist rỗng
@@ -81,7 +81,7 @@ test_scenarios = [
     p.addSong(new Song(2, "B", "ArtB", "Alb", 100, 10, "U"));
     p.removeSong(1); // Xóa B
     p.removeSong(0); // Xóa A
-    cout << "Size: " << p.size() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
+    cout << "Size: " << p.getSize() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
     """, "Size: 0 | Empty: Yes"),
 
     # Test 50: Kết hợp xóa phần tử và thêm phần tử mới ngay sau đó
@@ -99,7 +99,7 @@ test_scenarios = [
     Playlist p("Test 51");
     p.addSong(new Song(1, "Only Song", "Art", "Alb", 100, 10, "U"));
     p.removeSong(0);
-    cout << "Size: " << p.size() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
+    cout << "Size: " << p.getSize() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
     """, "Size: 0 | Empty: Yes"),
 
     # Test 52: Xóa liên tục ở vị trí 0 (giống cách hoạt động của Queue - pop)
@@ -110,7 +110,7 @@ test_scenarios = [
     }
     p.removeSong(0); // Xóa S0
     p.removeSong(0); // Xóa S1
-    cout << "Size: " << p.size() << " | New Head is: " << p.getSong(0)->toString() << endl;
+    cout << "Size: " << p.getSize() << " | New Head is: " << p.getSong(0)->toString() << endl;
     """, "Size: 3 | New Head is: S2-Art")
 ]
 
@@ -124,7 +124,7 @@ def generate():
             f.write("\n}\n")
         with open(os.path.join(TXT_DIR, txt_fn), "w", encoding="utf-8") as f:
             f.write(expected)
-    print("✅ Đã tạo xong test 43 - 52 riêng cho hàm removeSong của Playlist!")
+    print("✅ Đã tạo xong test 43 - 52 riêng cho hàm removeSong của Playlist (đã update getSize)!")
 
 if __name__ == "__main__":
     generate()

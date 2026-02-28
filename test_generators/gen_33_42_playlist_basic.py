@@ -11,14 +11,14 @@ test_scenarios = [
     # Test 33: Khởi tạo Playlist, kiểm tra trạng thái rỗng và size ban đầu
     (33, """
     Playlist p("My Chill Playlist");
-    cout << "Size: " << p.size() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
+    cout << "Size: " << p.getSize() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
     """, "Size: 0 | Empty: Yes"),
 
     # Test 34: Thêm 1 bài hát, kiểm tra size và trạng thái rỗng thay đổi
     (34, """
     Playlist p("Hits 2026");
     p.addSong(new Song(1, "Don't Start Now", "Dua Lipa", "Future Nostalgia", 183, 850, "url"));
-    cout << "Size: " << p.size() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
+    cout << "Size: " << p.getSize() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
     """, "Size: 1 | Empty: No"),
 
     # Test 35: Thêm nhiều bài hát liên tiếp và kiểm tra size tăng dần
@@ -27,7 +27,7 @@ test_scenarios = [
     p.addSong(new Song(1, "Ditto", "NewJeans", "OMG", 185, 900, "url1"));
     p.addSong(new Song(2, "Hype Boy", "NewJeans", "New Jeans", 179, 950, "url2"));
     p.addSong(new Song(3, "Super Shy", "NewJeans", "Get Up", 154, 920, "url3"));
-    cout << "Final Size: " << p.size() << endl;
+    cout << "Final Size: " << p.getSize() << endl;
     """, "Final Size: 3"),
 
     # Test 36: getSong cơ bản ở các vị trí khác nhau (đầu, giữa, cuối)
@@ -69,14 +69,14 @@ test_scenarios = [
     p.addSong(new Song(1, "Song A", "Artist A", "Album A", 100, 10, "url"));
     p.addSong(new Song(2, "Song B", "Artist B", "Album B", 200, 20, "url"));
     p.clear();
-    cout << "Size after clear: " << p.size() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
+    cout << "Size after clear: " << p.getSize() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
     """, "Size after clear: 0 | Empty: Yes"),
 
     # Test 40: clear() trên một Playlist vốn đã rỗng (không gây lỗi)
     (40, """
     Playlist p("Empty Clear");
     p.clear();
-    cout << "Size: " << p.size() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
+    cout << "Size: " << p.getSize() << " | Empty: " << (p.empty() ? "Yes" : "No") << endl;
     """, "Size: 0 | Empty: Yes"),
 
     # Test 41: Thêm bài hát sau khi clear() để đảm bảo cấu trúc list vẫn hoạt động tốt
@@ -85,7 +85,7 @@ test_scenarios = [
     p.addSong(new Song(1, "Old Song", "A", "B", 100, 50, "U"));
     p.clear();
     p.addSong(new Song(2, "New Song", "C", "D", 200, 60, "U"));
-    cout << "Size: " << p.size() << " | First song: " << p.getSong(0)->toString() << endl;
+    cout << "Size: " << p.getSize() << " | First song: " << p.getSong(0)->toString() << endl;
     """, "Size: 1 | First song: New Song-C"),
 
     # Test 42: Thêm số lượng lớn bài hát (1000 bài) để kiểm tra hiệu năng cơ bản và tính toàn vẹn
@@ -94,9 +94,9 @@ test_scenarios = [
     for(int i = 0; i < 1000; i++) {
         p.addSong(new Song(i, "Title", "Artist", "Album", i, i % 1000, "url"));
     }
-    cout << "Size: " << p.size() << " | getSong(500) ID: " << p.getSong(500)->getID() << endl;
+    cout << "Size: " << p.getSize() << " | getSong(500) ID: " << p.getSong(500)->getID() << endl;
     p.clear();
-    cout << "Size after clear: " << p.size() << endl;
+    cout << "Size after clear: " << p.getSize() << endl;
     """, "Size: 1000 | getSong(500) ID: 500\nSize after clear: 0")
 ]
 
@@ -110,7 +110,7 @@ def generate():
             f.write("\n}\n")
         with open(os.path.join(TXT_DIR, txt_fn), "w", encoding="utf-8") as f:
             f.write(expected)
-    print("✅ Đã tạo xong test 33 - 42 cho các hàm cơ bản của Playlist!")
+    print("✅ Đã tạo xong test 33 - 42 cho các hàm cơ bản của Playlist (đã update getSize)!")
 
 if __name__ == "__main__":
     generate()

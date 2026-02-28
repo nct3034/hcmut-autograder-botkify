@@ -41,32 +41,35 @@ test_scenarios = [
     cout << l.toString();
     """, "10,20,30"),
 
+    # ĐÃ SỬA T015: Kiểm tra removeItem trả về true (Có trong Spec)
     (15, """
     BotkifyLinkedList<int> l;
     l.add(5);
-    l.setCurrent(0);
     l.add(10);
-    cout << l.getCurrent();
-    """, "5"),
+    l.add(15);
+    bool res = l.removeItem(10);
+    cout << "Removed 10: " << res << " | List: " << l.toString();
+    """, "Removed 10: 1 | List: 5,15"),
 
+    # ĐÃ SỬA T016: Kiểm tra removeItem trả về false khi không tìm thấy
     (16, """
     BotkifyLinkedList<int> l;
     l.add(1);
     l.add(2);
-    l.add(3);
-    l.moveToEnd();
-    l.moveNext();
-    cout << l.getCurrent();
-    """, "1"),
+    bool res = l.removeItem(99);
+    cout << "Removed 99: " << res << " | List: " << l.toString();
+    """, "Removed 99: 0 | List: 1,2"),
 
+    # ĐÃ SỬA T017: Kiểm tra ném ngoại lệ out_of_range của hàm get()
     (17, """
     BotkifyLinkedList<int> l;
     l.add(1);
-    l.add(2);
-    l.moveToStart();
-    l.movePrev();
-    cout << l.getCurrent();
-    """, "2"),
+    try {
+        l.get(5);
+    } catch (const out_of_range& e) {
+        cout << "Exception: " << e.what();
+    }
+    """, "Exception: Index is invalid!"),
 
     (18, """
     BotkifyLinkedList<int> l;
@@ -99,13 +102,15 @@ test_scenarios = [
     cout << (l.empty() ? "Empty" : "Not Empty");
     """, "Empty"),
 
+    # ĐÃ SỬA T022: Thay copy constructor bằng kiểm tra ngoại lệ removeAt() rỗng
     (22, """
-    BotkifyLinkedList<int> l1;
-    l1.add(100);
-    BotkifyLinkedList<int> l2(l1);
-    l1.add(200);
-    cout << l2.size() << " " << l2.get(0);
-    """, "1 100")
+    BotkifyLinkedList<int> l;
+    try {
+        l.removeAt(0);
+    } catch (const out_of_range& e) {
+        cout << "Exception: " << e.what();
+    }
+    """, "Exception: Index is invalid!")
 ]
 
 def generate():
@@ -113,12 +118,12 @@ def generate():
         cpp_fn = f"test_{num:03d}.cpp"
         txt_fn = f"test_{num:03d}.txt"
         with open(os.path.join(CPP_DIR, cpp_fn), "w", encoding="utf-8") as f:
-            f.write(f"void test_{num:03d}() {{")
-            f.write(code.rstrip())
+            f.write(f"void test_{num:03d}() {{\n")
+            f.write(code.strip("\n"))
             f.write("\n}\n")
         with open(os.path.join(TXT_DIR, txt_fn), "w", encoding="utf-8") as f:
             f.write(expected)
-    print("✅ Đã tạo xong test 11 - 22!")
+    print("✅ Đã tạo xong test 11 - 22 (Chuẩn Spec LinkedList)!")
 
 if __name__ == "__main__":
     generate()

@@ -13,7 +13,7 @@ test_scenarios = [
     Playlist p("T113");
     p.addSong(new Song(1, "A", "A", "A", 10, 5, "U"));
     p.addSong(new Song(2, "B", "B", "B", 20, 10, "U"));
-    cout << p.size() << " " << p.empty() << " " << p.getTotalScore() << endl;
+    cout << p.getSize() << " " << p.empty() << " " << p.getTotalScore() << endl;
     cout << p.playNext()->toString() << endl;
     """, "2 0 200\nB-B"),
 
@@ -24,7 +24,7 @@ test_scenarios = [
     p.removeSong(4); 
     p.removeSong(2); 
     p.removeSong(0);
-    cout << p.size() << " " << p.getSong(0)->toString() << " " << p.getSong(1)->toString() << endl;
+    cout << p.getSize() << " " << p.getSong(0)->toString() << " " << p.getSong(1)->toString() << endl;
     """, "2 1-A 3-A"),
 
     # Test 115: Use BotkifyLinkedList side-by-side with Playlist
@@ -129,9 +129,9 @@ test_scenarios = [
     p.addSong(new Song(1,"A","A","A",10,2,"U"));
     p.addSong(new Song(2,"B","B","B",30,4,"U"));
     p.addSong(new Song(3,"C","C","C",20,6,"U"));
-    cout << p.size() << " " << p.getTotalScore() << " " << p.playApproximate(1) << " ";
+    cout << p.getSize() << " " << p.getTotalScore() << " " << p.playApproximate(1) << " ";
     p.removeSong(1);
-    cout << p.size() << " " << p.playNext()->toString() << endl;
+    cout << p.getSize() << " " << p.playNext()->toString() << endl;
     """, "3 132 10 2 C-C")
 ]
 
@@ -145,7 +145,7 @@ def generate():
             f.write("\n}\n")
         with open(os.path.join(TXT_DIR, txt_fn), "w", encoding="utf-8") as f:
             f.write(expected)
-    print("✅ Đã tạo xong 13 test integration tổng hợp (113 - 125)!")
+    print("✅ Đã tạo xong 13 test integration tổng hợp (113 - 125) (đã update getSize)!")
 
 if __name__ == "__main__":
     generate()
